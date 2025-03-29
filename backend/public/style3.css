@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+•⁠  ⁠{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #B7CFDC 0%, #89b7d1 50%, #6AABD2 100%);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    padding: 20px;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.hero {
+    width: 100%;
+    max-width: 800px;
+    animation: slideUp 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.hero h1 {
+    color: #2B2B2B;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+form {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+form::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(106, 171, 210, 0.2), transparent);
+    animation: rotate 6s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+form > div {
+    position: relative;
+    z-index: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #2B2B2B;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+input {
+    width: 100%;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #e0e0e0;
+    background: rgba(255, 255, 255, 0.9);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+input:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(106, 171, 210, 0.2);
+}
+
+input:focus {
+    outline: none;
+    border-color: #6AABD2;
+    box-shadow: 0 0 15px rgba(106, 171, 210, 0.3);
+}
+
+input::placeholder {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+button {
+    grid-column: 1 / -1;
+    padding: 15px 30px;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #6AABD2 0%, #39748a 100%);
+    color: white !important;
+    border: none !important;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 1.5rem !important;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(106, 171, 210, 0.4);
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+    from { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    to { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.payment {
+    grid-column: 1 / -1;
+    margin-top: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    form {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    input {
+        padding: 10px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    form {
+        padding: 1.5rem;
+    }
+
+    button {
+        padding: 12px 24px;
+    }
+}
+
+/* Razorpay Button Styling */
+form > form {
+    background: transparent;
+    padding: 0;
+    box-shadow: none;
+    
+}
+
+.razorpay-payment-button {
+    width: 100vh;
+    padding: 15px 258px !important;
+    
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.razorpay-payment-button:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(19, 64, 161, 0.4) !important;
+}

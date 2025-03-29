@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style3.css">
+</head>
+<body>
+    <div class="hero">
+        <h1>Enter your details</h1>
+        <form  action="/pay" method="post">
+            <div  class="name">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" placeholder="enter your name..">
+            </div>
+            
+            <div class="age">
+                <label for="age">Age:</label>
+                <input type="number" name="age" id="age" placeholder="enter your age...">
+            </div>
+            <div class="phone">
+                <label for="phone">Phone:</label>
+                <input type="number" name="phone" id="phone" placeholder="enter your number...">
+            </div>
+            <div class="email">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" placeholder="enter your email...">
+            </div>
+
+            <div class="id">
+                <label for="idd">Id:</label>
+                <input type="text" name="id" id="idd" placeholder="enter Hospial email...">  
+            </div>
+
+         
+            
+            <button>Submit</button>
+
+      
+
+        <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QCKPalJpTSI4cr" async> </script> </form>  
+                
+       
+        
+    </div>
+</body>
+</html>

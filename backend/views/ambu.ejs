@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Ambulance Locator | MediCare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #0d6efd;
+            --emergency: #dc3545;
+            --dark: #212529;
+            --light: #f8f9fa;
+            --hospital-blue: #1a73e8;
+            --hospital-red: #e94235;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+        }
+        
+        .emergency-header {
+            background-color: var(--hospital-red);
+            color: white;
+            padding: 0.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .emergency-contact {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .emergency-contact a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .container {
+            display: flex;
+            min-height: calc(100vh - 46px);
+        }
+        
+        .hero-section {
+            flex: 1;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1581056771107-24ca5f033842?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .features {
+            margin-top: 3rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon {
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        .form-section {
+            width: 450px;
+            background-color: white;
+            padding: 3rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo-icon {
+            color: var(--hospital-blue);
+            font-size: 2rem;
+            margin-right: 0.8rem;
+        }
+        
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+        
+        .form-title {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .form-description {
+            color: #6c757d;
+            margin-bottom: 2rem;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 1px solid #ced4da;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--hospital-blue);
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            bottom: 0.8rem;
+            color: #6c757d;
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 600;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.8rem 1.75rem;
+            font-size: 1.1rem;
+            line-height: 1.5;
+            border-radius: 0.5rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            color: white;
+            background-color: var(--hospital-blue);
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-primary:hover {
+            background-color: #0b5ed7;
+        }
+        
+        .btn-emergency {
+            background-color: var(--hospital-red);
+            color: white;
+            margin-top: 1rem;
+        }
+        
+        .btn-emergency:hover {
+            background-color: #bb2d3b;
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .hero-section {
+                padding: 3rem 2rem;
+                text-align: center;
+            }
+            
+            .hero-content {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .form-section {
+                width: 100%;
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="emergency-header">
+        <div class="hospital-name">
+            <i class="fas fa-hospital"></i> City General Hospital
+        </div>
+        <div class="emergency-contact">
+            <a href="tel:108"><i class="fas fa-phone"></i> Emergency: 108</a>
+            <a href="tel:+911234567890"><i class="fas fa-ambulance"></i> Ambulance: +91 12345 67890</a>
+        </div>
+    </div>
+    
+    <div class="container">
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1>Emergency Ambulance Services</h1>
+                <p>Our rapid response ambulance service ensures you get medical attention when you need it most. Locate the nearest available ambulance with just one click.</p>
+                
+                <div class="features">
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3>24/7 Availability</h3>
+                            <p>Always available when emergencies strike</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div>
+                            <h3>Rapid Response</h3>
+                            <p>Average response time under 8 minutes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div>
+                            <h3>Medical Staff</h3>
+                            <p>Equipped with trained paramedics</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="form-section">
+            <div class="logo">
+                <i class="fas fa-ambulance logo-icon"></i>
+                <span class="logo-text">MediCare EMS</span>
+            </div>
+            
+            <h2 class="form-title">Find Nearest Ambulance</h2>
+            <p class="form-description">Enter your location to locate the closest available ambulance</p>
+            
+            <form action="/ambulance" method="post">
+                <div class="input-group">
+                    <label for="location">Your Location</label>
+                    <i class="fas fa-map-marker-alt input-icon"></i>
+                    <input type="text" id="location" name="ambu" placeholder="Enter street address or landmark" required>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-search-location"></i> Locate Ambulance
+                </button>
+                
+                <button type="button" class="btn btn-emergency">
+                    <i class="fas fa-bell"></i> Critical Emergency
+                </button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

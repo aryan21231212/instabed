@@ -1,0 +1,21 @@
+{
+  "name": "hospital",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "aryan",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "mongoose": "^8.12.2",
+    "mysql2": "^3.13.0",
+    "path": "^0.12.7",
+    "react-router-dom": "^7.3.0"
+  }
+}

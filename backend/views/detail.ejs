@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/style2.css">
+</head>
+<body >
+    <%for(dat of data){%>
+        <div class="card">
+            <h1 style="text-align: center;"><%=dat.name%></h1>
+            <div class="main" >
+                <img src="<%=dat.image_url%>" >
+                <div >
+                    <p> <b> location: </b><%=dat.location%></p>
+                    <p> <b>seats available :</b> <%=dat.available_beds%>  </p>
+                    <p><b>rating :</b><%=dat.rating%></p>
+                    <p><b>ID :</b><%=dat.id%></p>
+                </div>
+            </div>
+            <form action="/book" method="get">
+                <button>Booking</button>
+            </form>
+        </div>
+   
+<%}%>
+</body>
+</html>

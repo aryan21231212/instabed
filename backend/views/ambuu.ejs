@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ambulance Dispatch Details | City General Hospital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --hospital-blue: #1a73e8;
+            --hospital-red: #e94235;
+            --hospital-purple: #6a1b9a;
+            --dark: #212529;
+            --light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--hospital-blue), var(--hospital-purple));
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        .emergency-contact {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .emergency-contact a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .ambulance-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        
+        .card-header {
+            background-color: var(--hospital-purple);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .card-header i {
+            font-size: 1.8rem;
+        }
+        
+        .card-body {
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .detail-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .detail-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--dark);
+            padding: 0.8rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid var(--hospital-blue);
+        }
+        
+        .map-container {
+            height: 300px;
+            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.1)), 
+                        url('https://maps.googleapis.com/maps/api/staticmap?center=<%=data.location%>&zoom=14&size=800x300&maptype=roadmap&markers=color:red%7C<%=data.location%>&key=YOUR_API_KEY');
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        
+        .map-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--hospital-blue);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--hospital-red);
+            color: white;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--hospital-blue);
+            color: var(--hospital-blue);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: 1rem;
+        }
+        
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .emergency-contact {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .card-body {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-ambulance logo-icon"></i>
+            <h1>City General Hospital EMS</h1>
+        </div>
+        <div class="emergency-contact">
+            <a href="tel:108"><i class="fas fa-phone"></i> Emergency: 108</a>
+            <a href="tel:+911234567890"><i class="fas fa-ambulance"></i> Dispatch: +91 12345 67890</a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="ambulance-card">
+            <div class="card-header">
+                <i class="fas fa-ambulance"></i>
+                <h2>Ambulance Dispatch Details <span class="status-badge status-active">ACTIVE</span></h2>
+            </div>
+            
+            <div class="card-body">
+                <div class="detail-group">
+                    <span class="detail-label"><i class="fas fa-map-marker-alt"></i> Current Location</span>
+                    <div class="detail-value"><%=data.location%></div>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label"><i class="fas fa-phone-alt"></i> Contact Number</span>
+                    <div class="detail-value"><%=data.ambulance_calling_number%></div>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label"><i class="fas fa-car-alt"></i> Vehicle Number</span>
+                    <div class="detail-value"><%=data.vehicle_number%></div>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label"><i class="fas fa-user-md"></i> Driver/Paramedic</span>
+                    <div class="detail-value"><%=data.driver_name%></div>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label"><i class="fas fa-clock"></i> Estimated Arrival</span>
+                    <div class="detail-value">8-12 minutes</div>
+                </div>
+                
+                <div class="detail-group">
+                    <span class="detail-label"><i class="fas fa-heartbeat"></i> Medical Equipment</span>
+                    <div class="detail-value">Basic Life Support, Oxygen, AED</div>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <div>Live Ambulance Location Tracking</div>
+                <div class="map-overlay">
+                    <span><i class="fas fa-map-pin"></i> <%=data.location%></span>
+                    <span><i class="fas fa-clock"></i> Last updated: 2 mins ago</span>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary">
+                    <i class="fas fa-phone"></i> Call Driver
+                </button>
+                <button class="btn btn-danger">
+                    <i class="fas fa-exclamation-triangle"></i> Emergency Alert
+                </button>
+                <button class="btn btn-outline">
+                    <i class="fas fa-directions"></i> Get Directions
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

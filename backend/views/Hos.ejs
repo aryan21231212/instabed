@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Bed Management System</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --danger: #e74c3c;
+            --warning: #f39c12;
+            --light: #f5f7fa;
+            --dark: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            padding: 20px;
+        }
+        
+        .header {
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+        
+        .tab-container {
+            margin: 20px 0;
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab {
+            padding: 12px 20px;
+            background-color: #f1f1f1;
+            cursor: pointer;
+            border-radius: 4px 4px 0 0;
+            margin-right: 5px;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-bottom: none;
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .stats-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .available-number {
+            color: var(--success);
+        }
+        
+        .occupied-number {
+            color: var(--danger);
+        }
+        
+        .maintenance-number {
+            color: var(--warning);
+        }
+        
+        .pending-number {
+            color: var(--secondary);
+        }
+        
+        .search-container {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .search-box {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            flex-grow: 1;
+            max-width: 300px;
+            font-size: 14px;
+        }
+        
+        .filter-select {
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-color: white;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th {
+            background-color: var(--secondary);
+            color: white;
+            text-align: left;
+            padding: 12px 15px;
+        }
+        
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            display: inline-block;
+        }
+        
+        .status-available {
+            background-color: #e6f7ee;
+            color: var(--success);
+        }
+        
+        .status-occupied {
+            background-color: #fdeaea;
+            color: var(--danger);
+        }
+        
+        .status-maintenance {
+            background-color: #fef5e7;
+            color: var(--warning);
+        }
+        
+        .status-pending {
+            background-color: #e8f4fc;
+            color: var(--secondary);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .btn {
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.2s;
+        }
+        
+        .btn-success {
+            background-color: var(--success);
+            color: white;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+        
+        .btn-warning {
+            background-color: var(--warning);
+            color: white;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 5px;
+            width: 50%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .request-details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .request-details p {
+            margin: 5px 0;
+        }
+        
+        .request-details strong {
+            font-weight: 600;
+        }
+        
+        .request-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .request-card {
+            background-color: white;
+            border-radius: 5px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-gap: 10px 20px;
+        }
+        
+        .request-card-header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .request-card-footer {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+        }
+        
+        .request-card-item {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .request-card-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 2px;
+        }
+        
+        .request-card-value {
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .modal-content {
+                width: 90%;
+            }
+            
+            .request-card {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Hospital Bed Management System</h1>
+        <div>
+            <span>Admin Panel</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="tab-container">
+            <div class="tab active" data-tab="beds">Bed Availability</div>
+            <div class="tab" data-tab="requests">Bed Requests</div>
+        </div>
+        
+        <!-- Bed Availability Tab -->
+        <div class="tab-content active" id="beds-tab">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Beds</h3>
+                    <div class="number" id="total-beds">1</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Available Beds</h3>
+                    <div class="number available-number" id="available-beds">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Occupied Beds</h3>
+                    <div class="number occupied-number" id="occupied-beds">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Maintenance</h3>
+                    <div class="number maintenance-number" id="maintenance-beds">1</div>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" id="bed-search" placeholder="Search beds...">
+                <select class="filter-select" id="bed-filter">
+                    <option value="all">All Status</option>
+                    <option value="available">Available</option>
+                    <option value="occupied">Occupied</option>
+                    <option value="maintenance">Maintenance</option>
+                </select>
+                <button class="btn btn-primary" id="add-bed-btn">Add New Bed</button>
+            </div>
+            
+            <div class="table-container">
+                <table id="beds-table">
+                    <thead>
+                        <tr>
+                            <th>Bed ID</th>
+                            <th>Ward</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-id="bed-203-jr" data-ward="203-E" data-type="Emergency" data-status="maintenance">
+                            <td>bed-203-jr</td>
+                            <td>203-E</td>
+                            <td>Emergency</td>
+                            <td>
+                                <span class="status status-maintenance">Maintenance</span>
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <button class="btn btn-primary edit-bed-btn">Edit</button>
+                                    <button class="btn btn-success mark-available-btn">Mark Available</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Bed Requests Tab -->
+        <div class="tab-content" id="requests-tab">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <h3>Total Requests</h3>
+                    <div class="number" id="total-requests">1</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Pending Requests</h3>
+                    <div class="number pending-number" id="pending-requests">1</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Approved Requests</h3>
+                    <div class="number available-number" id="approved-requests">0</div>
+                </div>
+                <div class="stat-card">
+                    <h3>Declined Requests</h3>
+                    <div class="number occupied-number" id="declined-requests">0</div>
+                </div>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" class="search-box" id="request-search" placeholder="Search by name, email or phone...">
+                <select class="filter-select" id="request-filter">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="declined">Declined</option>
+                </select>
+            </div>
+           <% for(let det of details) { %>
+            <div class="request-list" id="request-list">
+                <div class="request-card" data-id="req-001" data-status="pending">
+                    <div class="request-card-header">
+                        <h3>Bed Request #req-001</h3>
+                        <span class="status status-pending">Pending</span>
+                    </div>
+                    <div class="request-card-item">
+                        <span class="request-card-label">Name</span>
+                        <span class="request-card-value"><%=det.name%></span>
+                    </div>
+                    <div class="request-card-item">
+                        <span class="request-card-label">Email</span>
+                        <span class="request-card-value"><%=det.email%></span>
+                    </div>
+                    <div class="request-card-item">
+                        <span class="request-card-label">Phone</span>
+                        <span class="request-card-value"><%=det.Phone%></span>
+                    </div>
+                    <div class="request-card-item">
+                        <span class="request-card-label">Hospital Id</span>
+                        <span class="request-card-value"><%=det.id%></span>
+                    </div>
+                    <div class="request-card-footer">
+                        <button class="btn btn-primary view-request-btn" data-id="req-001">View Details</button>
+                        <button class="btn btn-danger decline-btn" data-id="req-001">Decline</button>
+                        <button class="btn btn-success approve-btn" data-id="req-001">Approve</button>
+                    </div>
+                </div>
+            </div>
+       <% } %>
+        </div>
+    </div>
+    
+    <!-- Edit Bed Modal -->
+    <div id="edit-bed-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Edit Bed</h2>
+            <form id="edit-bed-form">
+                <input type="hidden" id="edit-bed-id">
+                <div class="form-group">
+                    <label for="edit-bed-ward">Ward</label>
+                    <input type="text" id="edit-bed-ward" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-bed-type">Bed Type</label>
+                    <select id="edit-bed-type" class="form-control" required>
+                        <option value="Standard">Standard</option>
+                        <option value="ICU">ICU</option>
+                        <option value="Emergency">Emergency</option>
+                        <option value="Pediatric">Pediatric</option>
+                        <option value="Maternity">Maternity</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-bed-status">Status</label>
+                    <select id="edit-bed-status" class="form-control" required>
+                        <option value="available">Available</option>
+                        <option value="occupied">Occupied</option>
+                        <option value="maintenance">Maintenance</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-danger cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- View Request Modal -->
+    <div id="view-request-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Request Details</h2>
+            <div class="request-details" id="request-details-container">
+            </div>
+            <div class="form-group">
+                <label for="assign-bed">Assign Bed (for approval)</label>
+                <select id="assign-bed" class="form-control">
+                    <option value="">Select a bed...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="decline-reason">Reason for Declining (optional)</label>
+                <textarea id="decline-reason" class="form-control" rows="3"></textarea>
+            </div>
+            <div id="request-actions" class="form-actions">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Bed Modal -->
+    <div id="add-bed-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2>Add New Bed</h2>
+            <form id="add-bed-form">
+                <div class="form-group">
+                    <label for="add-bed-id">Bed ID</label>
+                    <input type="text" id="add-bed-id" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-bed-ward">Ward</label>
+                    <input type="text" id="add-bed-ward" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="add-bed-type">Bed Type</label>
+                    <select id="add-bed-type" class="form-control" required>
+                        <option value="Standard">Standard</option>
+                        <option value="ICU">ICU</option>
+                        <option value="Emergency">Emergency</option>
+                        <option value="Pediatric">Pediatric</option>
+                        <option value="Maternity">Maternity</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-danger cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-success">Add Bed</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            function updateRequestStats() {
+                const requestCards = document.querySelectorAll('.request-card');
+                let totalRequests = requestCards.length;
+                let pendingRequests = 0;
+                let approvedRequests = 0;
+                let declinedRequests = 0;
+                
+                requestCards.forEach(card => {
+                    const status = card.getAttribute('data-status');
+                    if (status === 'pending') pendingRequests++;
+                    else if (status === 'approved') approvedRequests++;
+                    else if (status === 'declined') declinedRequests++;
+                });
+                
+                document.getElementById('total-requests').textContent = totalRequests;
+                document.getElementById('pending-requests').textContent = pendingRequests;
+                document.getElementById('approved-requests').textContent = approvedRequests;
+                document.getElementById('declined-requests').textContent = declinedRequests;
+            }
+            
+            function updateBedStats() {
+                const rows = document.querySelectorAll('#beds-table tbody tr');
+                let total = rows.length;
+                let available = 0;
+                let occupied = 0;
+                let maintenance = 0;
+                
+                rows.forEach(row => {
+                    const status = row.getAttribute('data-status');
+                    if (status === 'available') available++;
+                    else if (status === 'occupied') occupied++;
+                    else if (status === 'maintenance') maintenance++;
+                });
+                
+                document.getElementById('total-beds').textContent = total;
+                document.getElementById('available-beds').textContent = available;
+                document.getElementById('occupied-beds').textContent = occupied;
+                document.getElementById('maintenance-beds').textContent = maintenance;
+            }
+            
+            updateRequestStats();
+            updateBedStats();
+            
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    tabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    const tabId = this.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            const modals = document.querySelectorAll('.modal');
+            const closeButtons = document.querySelectorAll('.close, .cancel-btn');
+            
+            function attachEditButtonListeners() {
+                document.querySelectorAll('.edit-bed-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const row = this.closest('tr');
+                        const bedId = row.getAttribute('data-id');
+                        const ward = row.getAttribute('data-ward');
+                        const type = row.getAttribute('data-type');
+                        const status = row.getAttribute('data-status');
+                        
+                        document.getElementById('edit-bed-id').value = bedId;
+                        document.getElementById('edit-bed-ward').value = ward;
+                        document.getElementById('edit-bed-type').value = type;
+                        document.getElementById('edit-bed-status').value = status;
+                        
+                        document.getElementById('edit-bed-modal').style.display = 'block';
+                    });
+                });
+            }
+            
+            attachEditButtonListeners();
+            
+            document.querySelectorAll('.view-request-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const requestId = this.getAttribute('data-id');
+                    const card = document.querySelector(`.request-card[data-id="${requestId}"]`);
+                    const status = card.getAttribute('data-status');
+                    
+                    const name = card.querySelector('.request-card-value:nth-of-type(1)').textContent;
+                    const email = card.querySelector('.request-card-value:nth-of-type(2)').textContent;
+                    const phone = card.querySelector('.request-card-value:nth-of-type(3)').textContent;
+                    
+                    const detailsHTML = `
+                        <p><strong>Request ID:</strong> ${requestId}</p>
+                        <p><strong>Patient Name:</strong> ${name}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        <p><strong>Phone:</strong> ${phone}</p>
+                        <p><strong>Status:</strong> ${status.charAt(0).toUpperCase() + status.slice(1)}</p>
+                    `;
+                    
+                    document.getElementById('request-details-container').innerHTML = detailsHTML;
+                    
+                    const assignBedSelect = document.getElementById('assign-bed');
+                    assignBedSelect.innerHTML = '<option value="">Select a bed...</option>';
+                    
+                    document.querySelectorAll('#beds-table tbody tr').forEach(row => {
+                        if (row.getAttribute('data-status') === 'available') {
+                            const bedId = row.getAttribute('data-id');
+                            const ward = row.getAttribute('data-ward');
+                            const type = row.getAttribute('data-type');
+                            assignBedSelect.innerHTML += `<option value="${bedId}">${bedId} - ${ward} (${type})</option>`;
+                        }
+                    });
+                    
+                    const actionsDiv = document.getElementById('request-actions');
+                    if (status === 'pending') {
+                        actionsDiv.innerHTML = `
+                            <button type="button" class="btn btn-danger modal-decline-btn" data-id="${requestId}">Decline Request</button>
+                            <button type="button" class="btn btn-success modal-approve-btn" data-id="${requestId}">Approve Request</button>
+                        `;
+                        
+                        document.querySelector('.modal-approve-btn').addEventListener('click', function() {
+                            const selectedBed = document.getElementById('assign-bed').value;
+                            if (!selectedBed) {
+                                alert('Please select a bed to assign to this request.');
+                                return;
+                            }
+                            
+                            card.setAttribute('data-status', 'approved');
+                            const statusSpan = card.querySelector('.status');
+                            statusSpan.className = 'status status-available';
+                            statusSpan.textContent = 'Approved';
+                            
+                            const bedRow = document.querySelector(`#beds-table tbody tr[data-id="${selectedBed}"]`);
+                            bedRow.setAttribute('data-status', 'occupied');
+                            const bedStatusSpan = bedRow.querySelector('.status');
+                            bedStatusSpan.className = 'status status-occupied';
+                            bedStatusSpan.textContent = 'Occupied';
+                            
+                            const cardButtons = card.querySelector('.request-card-footer');
+                            cardButtons.innerHTML = `
+                                <button class="btn btn-primary view-request-btn" data-id="${requestId}">View Details</button>
+                            `;
+                            
+                            cardButtons.querySelector('.view-request-btn').addEventListener('click', openViewRequestModal);
+                            
+                            alert(`Request #${requestId} has been approved and assigned to bed #${selectedBed}.`);
+                            document.getElementById('view-request-modal').style.display = 'none';
+                            updateRequestStats();
+                            updateBedStats();
+                        });
+                        
+                        document.querySelector('.modal-decline-btn').addEventListener('click', function() {
+                            const reason = document.getElementById('decline-reason').value;
+                            
+                            card.setAttribute('data-status', 'declined');
+                            const statusSpan = card.querySelector('.status');
+                            statusSpan.className = 'status status-occupied';
+                            statusSpan.textContent = 'Declined';
+                            
+                            const cardButtons = card.querySelector('.request-card-footer');
+                            cardButtons.innerHTML = `
+                                <button class="btn btn-primary view-request-btn" data-id="${requestId}">View Details</button>
+                            `;
+                            
+                            cardButtons.querySelector('.view-request-btn').addEventListener('click', openViewRequestModal);
+                            
+                            alert(`Request #${requestId} has been declined${reason ? ': ' + reason : ''}.`);
+                            document.getElementById('view-request-modal').style.display = 'none';
+                            updateRequestStats();
+                        });
+                    } else {
+                        actionsDiv.innerHTML = `
+                            <button type="button" class="btn btn-primary modal-close-btn">Close</button>
+                        `;
+                        
+                        document.querySelector('.modal-close-btn').addEventListener('click', function() {
+                            document.getElementById('view-request-modal').style.display = 'none';
+                        });
+                    }
+                    
+                    document.getElementById('view-request-modal').style.display = 'block';
+                });
+            });
+            
+            function openViewRequestModal() {
+                const requestId = this.getAttribute('data-id');
+                const card = document.querySelector(`.request-card[data-id="${requestId}"]`);
+                const status = card.getAttribute('data-status');
+                
+                const name = card.querySelector('.request-card-value:nth-of-type(1)').textContent;
+                const email = card.querySelector('.request-card-value:nth-of-type(2)').textContent;
+                const phone = card.querySelector('.request-card-value:nth-of-type(3)').textContent;
+                
+                const detailsHTML = `
+                    <p><strong>Request ID:</strong> ${requestId}</p>
+                    <p><strong>Patient Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Phone:</strong> ${phone}</p>
+                    <p><strong>Status:</strong> ${status.charAt(0).toUpperCase() + status.slice(1)}</p>
+                `;
+                
+                document.getElementById('request-details-container').innerHTML = detailsHTML;
+                document.getElementById('view-request-modal').style.display = 'block';
+            }
+            
+            document.getElementById('add-bed-btn').addEventListener('click', function() {
+                document.getElementById('add-bed-modal').style.display = 'block';
+            });
+            
+            closeButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    modals.forEach(modal => modal.style.display = 'none');
+                });
+            });
+            
+            window.addEventListener('click', function(event) {
+                modals.forEach(modal => {
+                    if (event.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            document.getElementById('edit-bed-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const bedId = document.getElementById('edit-bed-id').value;
+                const ward = document.getElementById('edit-bed-ward').value;
+                const type = document.getElementById('edit-bed-type').value;
+                const status = document.getElementById('edit-bed-status').value;
+                
+                const row = document.querySelector(`#beds-table tbody tr[data-id="${bedId}"]`);
+                row.setAttribute('data-ward', ward);
+                row.setAttribute('data-type', type);
+                row.setAttribute('data-status', status);
+                
+                row.cells[1].textContent = ward;
+                row.cells[2].textContent = type;
+                const statusSpan = row.cells[3].querySelector('.status');
+                statusSpan.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+                statusSpan.className = `status status-${status}`;
+                
+                const actionCell = row.cells[4];
+                let buttonsHTML = '<div class="action-buttons"><button class="btn btn-primary edit-bed-btn">Edit</button>';
+                if (status !== 'available') {
+                    buttonsHTML += '<button class="btn btn-success mark-available-btn">Mark Available</button>';
+                }
+                if (status !== 'maintenance') {
+                    buttonsHTML += '<button class="btn btn-warning mark-maintenance-btn">Maintenance</button>';
+                }
+                buttonsHTML += '</div>';
+                actionCell.innerHTML = buttonsHTML;
+                
+                document.getElementById('edit-bed-modal').style.display = 'none';
+                updateBedStats();
+                attachEditButtonListeners();
+            });
+            
+            document.getElementById('add-bed-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const bedId = document.getElementById('add-bed-id').value;
+                const ward = document.getElementById('add-bed-ward').value;
+                const type = document.getElementById('add-bed-type').value;
+                
+                const tbody = document.querySelector('#beds-table tbody');
+                const newRow = document.createElement('tr');
+                newRow.setAttribute('data-id', bedId);
+                newRow.setAttribute('data-ward', ward);
+                newRow.setAttribute('data-type', type);
+                newRow.setAttribute('data-status', 'available');
+                
+                newRow.innerHTML = `
+                    <td>${bedId}</td>
+                    <td>${ward}</td>
+                    <td>${type}</td>
+                    <td><span class="status status-available">Available</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary edit-bed-btn">Edit</button>
+                            <button class="btn btn-warning mark-maintenance-btn">Maintenance</button>
+                        </div>
+                    </td>
+                `;
+                
+                tbody.appendChild(newRow);
+                document.getElementById('add-bed-modal').style.display = 'none';
+                this.reset();
+                updateBedStats();
+                attachEditButtonListeners();
+            });
+            
+            document.getElementById('bed-search').addEventListener('input', filterBeds);
+            document.getElementById('bed-filter').addEventListener('change', filterBeds);
+            
+            function filterBeds() {
+                const searchTerm = document.getElementById('bed-search').value.toLowerCase();
+                const filterStatus = document.getElementById('bed-filter').value;
+                
+                document.querySelectorAll('#beds-table tbody tr').forEach(row => {
+                    const bedId = row.getAttribute('data-id').toLowerCase();
+                    const ward = row.getAttribute('data-ward').toLowerCase();
+                    const type = row.getAttribute('data-type').toLowerCase();
+                    const status = row.getAttribute('data-status');
+                    
+                    const matchesSearch = bedId.includes(searchTerm) || 
+                                        ward.includes(searchTerm) || 
+                                        type.includes(searchTerm);
+                    const matchesFilter = filterStatus === 'all' || status === filterStatus;
+                    
+                    row.style.display = matchesSearch && matchesFilter ? '' : 'none';
+                });
+            }
+            
+            document.getElementById('request-search').addEventListener('input', filterRequests);
+            document.getElementById('request-filter').addEventListener('change', filterRequests);
+            
+            function filterRequests() {
+                const searchTerm = document.getElementById('request-search').value.toLowerCase();
+                const filterStatus = document.getElementById('request-filter').value;
+                
+                document.querySelectorAll('.request-card').forEach(card => {
+                    const name = card.querySelector('.request-card-value:nth-of-type(1)').textContent.toLowerCase();
+                    const email = card.querySelector('.request-card-value:nth-of-type(2)').textContent.toLowerCase();
+                    const phone = card.querySelector('.request-card-value:nth-of-type(3)').textContent.toLowerCase();
+                    const status = card.getAttribute('data-status');
+                    
+                    const matchesSearch = name.includes(searchTerm) || 
+                                        email.includes(searchTerm) || 
+                                        phone.includes(searchTerm);
+                    const matchesFilter = filterStatus === 'all' || status === filterStatus;
+                    
+                    card.style.display = matchesSearch && matchesFilter ? '' : 'none';
+                });
+            }
+            
+            document.addEventListener('click', function(e) {
+                const row = e.target.closest('tr');
+                if (!row) return;
+                
+                if (e.target.classList.contains('mark-available-btn')) {
+                    row.setAttribute('data-status', 'available');
+                    const statusSpan = row.querySelector('.status');
+                    statusSpan.className = 'status status-available';
+                    statusSpan.textContent = 'Available';
+                    const actionCell = row.cells[4];
+                    actionCell.innerHTML = `
+                        <div class="action-buttons">
+                            <button class="btn btn-primary edit-bed-btn">Edit</button>
+                            <button class="btn btn-warning mark-maintenance-btn">Maintenance</button>
+                        </div>
+                    `;
+                    updateBedStats();
+                    attachEditButtonListeners();
+                }
+                if (e.target.classList.contains('mark-maintenance-btn')) {
+                    row.setAttribute('data-status', 'maintenance');
+                    const statusSpan = row.querySelector('.status');
+                    statusSpan.className = 'status status-maintenance';
+                    statusSpan.textContent = 'Maintenance';
+                    const actionCell = row.cells[4];
+                    actionCell.innerHTML = `
+                        <div class="action-buttons">
+                            <button class="btn btn-primary edit-bed-btn">Edit</button>
+                            <button class="btn btn-success mark-available-btn">Mark Available</button>
+                        </div>
+                    `;
+                    updateBedStats();
+                    attachEditButtonListeners();
+                }
+            });
+            
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('approve-btn')) {
+                    const requestId = e.target.getAttribute('data-id');
+                    const card = document.querySelector(`.request-card[data-id="${requestId}"]`);
+                    card.setAttribute('data-status', 'approved');
+                    card.querySelector('.status').className = 'status status-available';
+                    card.querySelector('.status').textContent = 'Approved';
+                    const footer = card.querySelector('.request-card-footer');
+                    footer.innerHTML = `<button class="btn btn-primary view-request-btn" data-id="${requestId}">View Details</button>`;
+                    updateRequestStats();
+                }
+                if (e.target.classList.contains('decline-btn')) {
+                    const requestId = e.target.getAttribute('data-id');
+                    const card = document.querySelector(`.request-card[data-id="${requestId}"]`);
+                    card.setAttribute('data-status', 'declined');
+                    card.querySelector('.status').className = 'status status-occupied';
+                    card.querySelector('.status').textContent = 'Declined';
+                    const footer = card.querySelector('.request-card-footer');
+                    footer.innerHTML = `<button class="btn btn-primary view-request-btn" data-id="${requestId}">View Details</button>`;
+                    updateRequestStats();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

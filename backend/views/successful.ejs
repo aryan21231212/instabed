@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVG Transition</title>
+    <style>
+
+        body{
+            height: 100vh;
+            width:100% ;
+            overflow: none;
+            background-color: rgb(144, 200, 238);
+        }
+        /* Apply transition to the paths */
+        path {
+            transition: all 2s ease-in-out; /* Transition effect for all properties */
+        }
+
+        /* Example hover effect: Change color on hover */
+        svg:hover path {
+            fill: rgb(0, 200, 50); /* Change color to a different green */
+            transform: scale(1.1); /* Slightly scale up the SVG */
+            height: 200px;
+            width: 200px;
+        }
+
+        /* For stroke-dasharray effect to animate the path "drawing" */
+        path {
+            stroke-dasharray: 1000;  /* Length of path to create dash */
+            stroke-dashoffset: 1000; /* Initially hide the path */
+            transition: stroke-dashoffset 2s ease; /* Animate stroke-dashoffset */
+        }
+
+        svg:hover path {
+            stroke-dashoffset: 0; /* Reveal path on hover */
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; font-weight: 800;font-size: 40px;">Your payment is successful</h1>
+    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 608 608" width="100" height="100" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%; transform: translate3d(0px, 0px, 0px); content-visibility: visible;">
+        <defs>
+            <clipPath id="__lottie_element_2">
+                <rect width="608" height="608" x="0" y="0"></rect>
+            </clipPath>
+        </defs>
+        <g clip-path="url(#__lottie_element_2)">
+            <g transform="matrix(0.8489413261413574,0,0,0.8489413261413574,336.259765625,304)" opacity="0.9197022249711679" style="display: block;">
+                <g opacity="1" transform="matrix(1,0,0,1,-38,0)">
+                    <path fill="rgb(0,126,51)" fill-opacity="1" d="M0,-182 C-100.51599884033203,-182 -182,-100.51599884033203 -182,0 C-182,100.51599884033203 -100.51599884033203,182 0,182 C100.51599884033203,182 182,100.51599884033203 182,0 C182,-100.51599884033203 100.51599884033203,-182 0,-182z"></path>
+                    <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(56,89,131)" stroke-opacity="1" stroke-width="0" d="M0,-182 C-100.51599884033203,-182 -182,-100.51599884033203 -182,0 C-182,100.51599884033203 -100.51599884033203,182 0,182 C100.51599884033203,182 182,100.51599884033203 182,0 C182,-100.51599884033203 100.51599884033203,-182 0,-182z"></path>
+                </g>
+            </g>
+            <g transform="matrix(1.0700000524520874,0,0,1.0700000524520874,344.6600036621094,304)" opacity="1" style="display: block;">
+                <g opacity="1" transform="matrix(1,0,0,1,-38,0)">
+                    <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(0,116,46)" stroke-opacity="1" stroke-width="25" d="M0,-182 C-100.51599884033203,-182 -182,-100.51599884033203 -182,0 C-182,100.51599884033203 -100.51599884033203,182 0,182 C100.51599884033203,182 182,100.51599884033203 182,0 C182,-100.51599884033203 100.51599884033203,-182 0,-182z"></path>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,342,304)" opacity="1" style="display: block;">
+                <g opacity="1" transform="matrix(1,0,0,1,-38,0)">
+                    <path fill="rgb(0,126,51)" fill-opacity="1" d="M0,-182 C-100.51599884033203,-182 -182,-100.51599884033203 -182,0 C-182,100.51599884033203 -100.51599884033203,182 0,182 C100.51599884033203,182 182,100.51599884033203 182,0 C182,-100.51599884033203 100.51599884033203,-182 0,-182z"></path>
+                    <path stroke-linecap="butt" stroke-linejoin="miter" fill-opacity="0" stroke-miterlimit="4" stroke="rgb(56,89,131)" stroke-opacity="1" stroke-width="0" d="M0,-182 C-100.51599884033203,-182 -182,-100.51599884033203 -182,0 C-182,100.51599884033203 -100.51599884033203,182 0,182 C100.51599884033203,182 182,100.51599884033203 182,0 C182,-100.51599884033203 100.51599884033203,-182 0,-182z"></path>
+                </g>
+            </g>
+            <g transform="matrix(1,0,0,1,301.5,281)" opacity="1" style="display: block;">
+                <g opacity="1" transform="matrix(1,0,0,1,0,0)">
+                    <path stroke-linecap="round" stroke-linejoin="round" fill-opacity="0" stroke="rgb(255,255,255)" stroke-opacity="1" stroke-width="25" d="M-119,30 C-119,30 -44,96 -44,96 C-44,96 112,-50 112,-50"></path>
+                </g>
+            </g>
+        </g>
+    </svg>
+</body>
+</html>

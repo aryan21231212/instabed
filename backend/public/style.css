@@ -1,0 +1,127 @@
+body {
+    background: linear-gradient(45deg, 
+      #f0f9ff, 
+      #e0f2fe, 
+      #bae6fd, 
+      #7dd3fc);
+    background-size: 400% 400%;
+    animation: auroraFlow 5s ease-in-out infinite;
+    margin: 0;
+padding: 0;
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+
+  }
+  
+  @keyframes auroraFlow {
+    0% { background-position: 0% 82%; }
+    50% { background-position: 100% 19%; }
+    100% { background-position: 0% 82%; }
+  }
+
+
+form {
+background: white;
+padding: 2rem 3rem;
+border-radius: 20px;
+box-shadow: 0 10px 30px rgba(0, 115, 170, 0.1);
+animation: slideUp 0.8s ease-out;
+max-width: 500px;
+width: 90%;
+}
+
+textarea {
+width: 100%;
+padding: 1rem;
+border: 2px solid #e0f2fe;
+border-radius: 12px;
+font-size: 1rem;
+resize: vertical;
+transition: all 0.3s ease;
+background: #f8fafc;
+color: #0c4a6e;
+}
+
+textarea:focus {
+outline: none;
+border-color: #38bdf8;
+box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+background: white;
+}
+
+textarea::placeholder {
+color: #94a3b8;
+font-style: italic;
+}
+
+button {
+margin-top: 1.5rem;
+width: 100%;
+padding: 1rem 2rem;
+background: #38bdf8;
+color: white;
+border: none;
+border-radius: 10px;
+font-size: 1.1rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.3s ease;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+button:hover {
+background: #0ea5e9;
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(14, 165, 233, 0.3);
+}
+
+button:active {
+transform: translateY(0);
+}
+
+@keyframes slideUp {
+from {
+    opacity: 0;
+    transform: translateY(50px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+/* Pulse animation for button */
+@keyframes pulse {
+0% {
+    transform: scale(1);
+}
+50% {
+    transform: scale(1.02);
+}
+100% {
+    transform: scale(1);
+}
+}
+
+button:hover {
+animation: pulse 1.5s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 480px) {
+form {
+    padding: 1.5rem;
+}
+
+textarea {
+    font-size: 0.9rem;
+}
+
+button {
+    padding: 0.8rem;
+    font-size: 1rem;
+}
+}

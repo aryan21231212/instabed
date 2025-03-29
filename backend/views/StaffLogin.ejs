@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthcare Staff Portal | Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f5f7fa;
+      color: #333;
+    }
+    
+    .container {
+      display: flex;
+      min-height: 100vh;
+    }
+    
+    .left-panel {
+      flex: 1;
+      background-image: url('https://img.freepik.com/free-photo/medical-workers-studying-together_23-2149271066.jpg');
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      display: none;
+    }
+    
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(25, 118, 210, 0.8);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 2rem;
+      color: white;
+    }
+    
+    .left-content {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+    
+    .left-content h2 {
+      font-size: 2.2rem;
+      margin-bottom: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .left-content p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+    
+    .feature i {
+      margin-right: 10px;
+      font-size: 1.2rem;
+    }
+    
+    .right-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+    }
+    
+    .login-container {
+      width: 100%;
+      max-width: 400px;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+    
+    .logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+    
+    .logo-text {
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: #1976d2;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      color: #333;
+      font-weight: 600;
+    }
+    
+    .login-description {
+      color: #666;
+      margin-bottom: 2rem;
+      font-size: 0.95rem;
+    }
+    
+    form {
+      width: 100%;
+      border: none;
+      padding: 0;
+      height: auto;
+    }
+    
+    .input-group {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .input-group i {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #666;
+    }
+    
+    input {
+      width: 100%;
+      padding: 12px 12px 12px 40px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      transition: all 0.3s;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    input:focus {
+      border-color: #1976d2;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+    }
+    
+    input::placeholder {
+      color: #999;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 500;
+    }
+    
+    button:hover {
+      background-color: #1565c0;
+    }
+    
+    .instructions {
+      margin-top: 1.5rem;
+      padding: 1rem;
+      background-color: #f0f7ff;
+      border-radius: 5px;
+      border-left: 4px solid #1976d2;
+    }
+    
+    .instructions p {
+      font-size: 0.9rem;
+      color: #333;
+      margin-bottom: 0.5rem;
+    }
+    
+    .footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #777;
+    }
+    
+    .help-link {
+      display: inline-block;
+      margin-top: 0.5rem;
+      color: #1976d2;
+      text-decoration: none;
+    }
+    
+    @media (min-width: 768px) {
+      .left-panel {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <div class="overlay">
+        <div class="left-content">
+          <h2>Welcome to HealthConnect Staff Portal</h2>
+          <p>Access everything you need to provide exceptional patient care in one secure place.</p>
+          
+          <div class="feature">
+            <i class="fas fa-user-md"></i>
+            <span>Patient records and medical history</span>
+          </div>
+          <div class="feature">
+            <i class="fas fa-calendar-check"></i>
+            <span>Appointment scheduling and management</span>
+          </div>
+          <div class="feature">
+            <i class="fas fa-clipboard-list"></i>
+            <span>Treatment plans and medication tracking</span>
+          </div>
+          <div class="feature">
+            <i class="fas fa-chart-line"></i>
+            <span>Analytics and reporting tools</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="right-panel">
+      <div class="login-container">
+        <div class="logo-container">
+          <img src="https://img.freepik.com/free-vector/hospital-logo-design-vector-medical-cross_53876-136743.jpg" alt="HealthConnect Logo" class="logo">
+          <div class="logo-text">Instabed</div>
+        </div>
+        
+        <h1>Hospital Staff Login</h1>
+        <p class="login-description">Enter your hospital ID to access the secure staff portal.</p>
+        
+        <form action="/sLogin" method="post">
+          <div class="input-group">
+            <i class="fas fa-hospital-user"></i>
+            <input type="text" name="hospital_id" placeholder="Enter Your Hospital ID..." required autofocus>
+          </div>
+          
+          <button type="submit">Enter Portal</button>
+        </form>
+        
+        <div class="instructions">
+          <p><strong>Your hospital ID:</strong> The unique identifier assigned to you by your hospital administration.</p>
+          <p>If you don't know your ID or need assistance, please contact your department supervisor.</p>
+        </div>
+      </div>
+      
+      <div class="footer">
+        <p>© 2025 HealthConnect. All rights reserved.</p>
+        <a href="#" class="help-link">Need help? Contact support</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
