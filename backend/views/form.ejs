@@ -5,44 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/style3.css">
+    <style>
+        /* Add this CSS for notifications */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.5s forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+        
+        .close-notification {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <div class="hero">
         <h1>Enter your details</h1>
-        <form  action="/pay" method="post">
-            <div  class="name">
+        <form id="patientForm" action="/pay" method="post">
+            <div class="name">
                 <label for="name">Name:</label>
-                <input type="text" id="name" name="name" placeholder="enter your name..">
+                <input type="text" id="name" name="name" placeholder="enter your name.." required>
             </div>
             
             <div class="age">
                 <label for="age">Age:</label>
-                <input type="number" name="age" id="age" placeholder="enter your age...">
+                <input type="number" name="age" id="age" placeholder="enter your age..." required>
             </div>
             <div class="phone">
                 <label for="phone">Phone:</label>
-                <input type="number" name="phone" id="phone" placeholder="enter your number...">
+                <input type="number" name="phone" id="phone" placeholder="enter your number..." required>
             </div>
             <div class="email">
                 <label for="email">Email:</label>
-                <input type="email" name="email" id="email" placeholder="enter your email...">
+                <input type="email" name="email" id="email" placeholder="enter your email..." required>
             </div>
 
             <div class="id">
                 <label for="idd">Id:</label>
-                <input type="text" name="id" id="idd" placeholder="enter Hospial email...">  
+                <input type="text" name="id" id="idd" placeholder="enter Hospital email..." required>  
             </div>
 
+            <div>
+                <label for="Symptoms">Symptoms:</label>
+                <textarea name="symptoms" placeholder="Enter your symptoms" id="Symptoms" required></textarea>
+            </div>
          
-            
-            <button>Submit</button>
-
-      
-
-        <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QCKPalJpTSI4cr" async> </script> </form>  
-                
+            <button type="submit">Submit</button>
        
-        
+
+        <!-- Razorpay payment button -->
+        <script src="https://checkout.razorpay.com/v1/payment-button.js" data-payment_button_id="pl_QCKPalJpTSI4cr" async></script>
+    </form>
+        <!-- Notification element -->
+        <div id="notification" class="notification">
+            <span id="notification-message">Request sent successfully!</span>
+            <span class="close-notification" onclick="closeNotification()">×</span>
+        </div>
     </div>
+
+    <script>
+        // Function to show notification
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            const messageElement = document.getElementById('notification-message');
+            
+            messageElement.textContent = message;
+            notification.style.display = 'block';
+            
+            // Hide notification after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Function to close notification
+        function closeNotification() {
+            document.getElementById('notification').style.display = 'none';
+        }
+
+        // Handle form submission
+        document.getElementById('patientForm').addEventListener('submit', function(e) {
+            // You can add form validation here if needed
+            
+            // Show notification when form is submitted
+            showNotification('Your bed request has been sent successfully!');
+            
+            // The form will continue with its normal submission to /pay
+            // If you want to handle the submission with AJAX, you can do:
+            // e.preventDefault();
+            // Then use fetch() or XMLHttpRequest to submit the form
+            // And show notification based on the response
+        });
+
+        // If you're using the Razorpay payment button, you might want to 
+        // show a notification after payment is completed as well
+        // You would need to handle the Razorpay callback for this
+    </script>
 </body>
 </html>

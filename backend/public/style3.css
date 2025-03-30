@@ -82,7 +82,7 @@ label {
     transition: color 0.3s ease;
 }
 
-input {
+input,textarea {
     width: 100%;
     padding: 12px 15px;
     font-size: 1rem;
@@ -92,18 +92,18 @@ input {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-input:hover {
+input,textarea:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(106, 171, 210, 0.2);
 }
 
-input:focus {
+input,textarea:focus {
     outline: none;
     border-color: #6AABD2;
     box-shadow: 0 0 15px rgba(106, 171, 210, 0.3);
 }
 
-input::placeholder {
+input,textarea::placeholder {
     color: #888;
     font-size: 0.9rem;
 }
@@ -166,7 +166,7 @@ button::after {
         font-size: 2rem;
     }
 
-    input {
+    input,textarea {
         padding: 10px 12px;
     }
 }

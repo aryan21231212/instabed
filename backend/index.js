@@ -36,10 +36,10 @@ app.set("view engine","ejs");
 app.set('views',path.join(__dirname,"/views"))
 
 app.listen(port,(req,res)=>{
-    console.log("listening on port 5173");
+    console.log("listening on port 3000");
 })
 
-app.get("/",(req,res)=>{
+app.get("/bed",(req,res)=>{
     res.render("home.ejs")
 })
 
@@ -53,6 +53,7 @@ app.post("/pay",(req,res)=>{
     let Userphone = req.body.phone
     let Useremail = req.body.email
     let HospitalId = req.body.id
+    let symptoms = req.body.symptoms;
 
     
 
@@ -65,7 +66,8 @@ app.post("/pay",(req,res)=>{
             name:Username,
             email:Useremail,
             Phone:Userphone,
-            id:HospitalId
+            id:HospitalId,
+            symptoms:symptoms
         })
         res.render("successful.ejs")
     }

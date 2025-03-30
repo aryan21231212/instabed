@@ -382,19 +382,19 @@
             <div class="stats-container">
                 <div class="stat-card">
                     <h3>Total Beds</h3>
-                    <div class="number" id="total-beds">1</div>
+                    <div class="number" id="total-beds">400</div>
                 </div>
                 <div class="stat-card">
                     <h3>Available Beds</h3>
-                    <div class="number available-number" id="available-beds">0</div>
+                    <div class="number available-number" id="available-beds">300</div>
                 </div>
                 <div class="stat-card">
                     <h3>Occupied Beds</h3>
-                    <div class="number occupied-number" id="occupied-beds">0</div>
+                    <div class="number occupied-number" id="occupied-beds">10</div>
                 </div>
                 <div class="stat-card">
                     <h3>Maintenance</h3>
-                    <div class="number maintenance-number" id="maintenance-beds">1</div>
+                    <div class="number maintenance-number" id="maintenance-beds">2</div>
                 </div>
             </div>
             
@@ -493,8 +493,15 @@
                         <span class="request-card-label">Hospital Id</span>
                         <span class="request-card-value"><%=det.id%></span>
                     </div>
+                    <div class="request-card-item">
+                        <span class="request-card-label">Symptoms</span>
+                        <span class="request-card-value"><%=det.symptoms%></span>
+                    </div>
                     <div class="request-card-footer">
-                        <button class="btn btn-primary view-request-btn" data-id="req-001">View Details</button>
+                        <a href="http://localhost:3000/bed">
+                            <button class="btn btn-primary view-request-btn" data-id="req-001">Ref.  to other </button>
+                        </a>
+                        
                         <button class="btn btn-danger decline-btn" data-id="req-001">Decline</button>
                         <button class="btn btn-success approve-btn" data-id="req-001">Approve</button>
                     </div>

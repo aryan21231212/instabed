@@ -17,7 +17,12 @@ const Schema = new mongoose.Schema({
     id:{
         type:String,
         required:true,
+    },
+    symptoms:{
+        type:String,
+        
     }
+
 
 })
 
